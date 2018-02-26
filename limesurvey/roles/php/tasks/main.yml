@@ -1,0 +1,32 @@
+---
+
+- name: Install remi-release
+  yum: name=http://rpms.famillecollet.com/enterprise/remi-release-7.rpm state=present disable_gpg_check=yes
+- name: Install epel-release
+  yum: name=epel-release state=latest disable_gpg_check=yes
+
+- name: Install PHP 5.6
+  yum: name={{ item }} state=latest enablerepo=remi,remi-php56 disable_gpg_check=yes
+  with_items:
+    - php-fpm
+    - php-mbstring
+    - php-gd 
+    - php-imap
+    - php-ldap
+    - php-zip
+    - php-zlib
+    - php-mysqlnd
+    - php-xml
+
+- name: Config php-fpm for user
+  lineinfile: path=/etc/php-fpm.d/www.conf regexp='^user\s=\sapache$' line='user = nginx'
+
+- name: Config php-fpm for group
+  lineinfile: path=/etc/php-fpm.d/www.conf regexp='^group\s=\sapache$' line='group = nginx'
+
+- name: Change attribute
+  file: path='/var/lib/php/{{ item }}' group=nginx
+  with_items:
+    - session
+    - wsdlcache
+

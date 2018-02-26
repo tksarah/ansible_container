@@ -1,0 +1,28 @@
+version: "2"
+settings:
+  conductor:
+    base: centos:7
+
+  project_name: lime
+
+services:
+  limesurvey:
+    from: "centos:7"
+    roles:
+      - nginx
+      - php
+      - mariadb
+      - limesurvey
+      - start
+    ports:
+      - "80:80"
+    command: ["/root/start.sh"]
+    dev_overrides:
+      environment:
+        - "DEBUG=2"
+
+registries: {}
+  # Add optional registries used for deployment. For example:
+  #  google:
+  #    url: https://gcr.io
+  #    namespace: my-cool-project-xxxxxx   

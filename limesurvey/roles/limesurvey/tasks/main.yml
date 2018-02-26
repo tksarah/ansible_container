@@ -1,0 +1,20 @@
+---
+- name: Create Service Directory
+  file: path={{ SERVICE_DIR }} owner=nginx group=nginx recurse=yes state=directory
+
+- name: Download Limesurvey
+  get_url: url={{ URL }} dest=/tmp/limesurvey.tar.gz
+
+- name: Unarchive
+  unarchive: src=/tmp/limesurvey.tar.gz dest={{ ROOT_DIR }} remote_src=yes
+
+- name: Rename
+  shell: mv {{ ROOT_DIR }}/*/* {{ SERVICE_DIR }}
+  args:
+    creates: "{{ SERVICE_DIR }}/index.php"
+
+- name: Change attribute
+  file: path={{ ROOT_DIR }} owner=nginx group=nginx recurse=yes state=directory
+
+- name: Cleanup
+  file: path=/tmp/limesurvey.tar.gz state=absent

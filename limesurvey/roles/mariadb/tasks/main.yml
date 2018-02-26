@@ -1,0 +1,8 @@
+---
+# tasks file for mariadb
+
+- name: Install Mariadb
+  yum: name=mariadb-server state=latest disable_gpg_check=yes
+
+- name: Initialize DB
+  shell: mysql_install_db --user=mysql --ldata=/var/lib/mysql/ creates=/var/lib/mysql/mysql

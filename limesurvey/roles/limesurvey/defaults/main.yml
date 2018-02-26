@@ -1,0 +1,4 @@
+---
+ROOT_DIR: /var/www
+SERVICE_DIR: /var/www/survey
+URL: "http://www.d-ip.jp/download/images/limesurvey2.73.0+171219_ja_dip.tar.gz"

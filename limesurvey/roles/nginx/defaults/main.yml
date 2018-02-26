@@ -1,0 +1,4 @@
+---
+# defaults file for nginx
+ROOT_DIR: "/var/www/survey"
+SERVER_NAME: "localhost"
